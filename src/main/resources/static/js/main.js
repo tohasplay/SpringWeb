@@ -10,8 +10,8 @@ Vue.component('order-form', {
     },
     template:
         '<div>' +
-        '<input type="text" placeholder="Order here" v-model="text"/>' +
-        '<input type="text" placeholder="Your id" v-model="customer_id"/>' +
+        '<input type="text" placeholder="Order here" v-model="text"/><br>' +
+        '<input type="text" placeholder="Your id" v-model="customer_id"/><br>' +
         '<input type="button" value="Place Order" @click="save"/>'
         + '</div>',
     methods: {

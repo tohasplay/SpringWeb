@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class OrdersController {
 
     private int counter = 4;
-    private ArrayList<Order> orders = new ArrayList<>() {
+    private final ArrayList<Order> orders = new ArrayList<>() {
         {
             add(new Order(1, "First", 23.23f, 1));
             add(new Order(2, "Second", 12.0f, 2));
@@ -35,10 +35,14 @@ public class OrdersController {
 
     @PostMapping
     public Order create(@RequestBody Order order) {
+        if (CustomerController.getCustomers().stream()
+                .anyMatch(customer -> customer.getId() == order.getCustomer_id())){
         order.setId(counter++);
         order.setPrice(Math.round((float) (5 + Math.random() * 500) * 100.0f) / 100.0f);
         orders.add(order);
-        return order;
+        return order;}else {
+            throw new NotFoundException();
+        }
     }
 
     @PutMapping("{id}")

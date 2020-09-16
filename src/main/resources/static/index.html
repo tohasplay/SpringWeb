@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>Orders</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
 <body>
-<h3>Hello</h3>
+<div id="navigation">
+    <ul>
+        <li id="first"><a href="#">Place order</a></li>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Chek total</a></li>
+        <li><a href="#">All orders</a></li>
+    </ul>
+</div>
 <div id="app">
     {{ message }}
 </div>
