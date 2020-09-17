@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 public class CustomerController {
     private static long counter = 1;
     private final static ArrayList<Customer> customers = new ArrayList<>(){{
-        add(new Customer(counter++, "Patrik"));
-        add(new Customer(counter++, "Adam"));
-        add(new Customer(counter++, "Rubin"));
+        add(new Customer(counter++, "Patrik", "ptrk@email.com", "0500450"));
+        add(new Customer(counter++, "Adam","adm@email.com", "0500450"));
+        add(new Customer(counter++, "Rubin","rbn@email.com", "0500450"));
     }};
 
     public static ArrayList<Customer> getCustomers() {
@@ -55,6 +55,9 @@ public class CustomerController {
 
     @PostMapping
     public Customer register(@RequestBody Customer customer){
+        if (customers.contains(customer)){
+            return customer;
+        }
         customer.setId(counter++);
         customers.add(customer);
         return customer;
