@@ -10,13 +10,17 @@ import java.util.ArrayList;
 public class OrdersController {
 
     private int counter = 4;
-    private final ArrayList<Order> orders = new ArrayList<>() {
+    private static final ArrayList<Order> orders = new ArrayList<>() {
         {
             add(new Order(1, "First", 23.23f, 1));
             add(new Order(2, "Second", 12.0f, 2));
             add(new Order(3, "Third", 123.f, 2));
         }
     };
+
+    public static ArrayList<Order> getOrders() {
+        return orders;
+    }
 
     @GetMapping
     public ArrayList<Order> defaultMap() {

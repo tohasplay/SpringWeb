@@ -1,9 +1,11 @@
 package com.demo.service;
 
 import com.demo.exception.NotFoundException;
+import com.demo.tools.Node;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/customer")
@@ -27,6 +29,23 @@ public class CustomerController {
     @GetMapping("{id}")
     public Customer getById(@PathVariable long id){
         return getCustomer(id);
+    }
+
+    @GetMapping("/count/{id}")
+    public Node<Float, Integer> getCount(@PathVariable long id){
+        ArrayList<Order> orders = OrdersController.getOrders().stream().filter(
+                order -> order.getCustomer_id() == id
+        ).collect(Collectors.toCollection(ArrayList::new));
+        Node<Float, Integer> result = new Node<>(0f, 0);
+        if (orders.isEmpty()){
+            throw new NotFoundException();
+        }
+        for (Order order:
+             orders) {
+            result.first += order.getPrice();
+            result.second++;
+        }
+        return result;
     }
 
     private Customer getCustomer(long id) {
