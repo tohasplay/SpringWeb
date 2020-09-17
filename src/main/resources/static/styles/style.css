@@ -14,7 +14,7 @@ div{
     background-color: white;
     text-align: center;
     padding: 10px;
-    opacity: 0.95;
+    opacity: 0.9;
     font-family: 'Oswald', sans-serif;
 
 }
@@ -103,4 +103,5 @@ li {
 
 #content{
     min-height: 90vh;
+    width: 100vw;
 }
