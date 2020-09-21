@@ -1,8 +1,13 @@
 package com.demo;
 
+import com.demo.service.customers.CustomerInstance;
+import com.demo.service.customers.CustomersHandler;
+import com.demo.service.orders.OrderInstance;
+import com.demo.service.orders.OrdersHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -12,13 +17,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	@Bean
-	public Docket productApi(){
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.demo")).build();
-	}
+    @Bean
+    public Docket productApi() {
+        return new Docket(DocumentationType.SWAGGER_2).select()
+                .apis(RequestHandlerSelectors.basePackage("com.demo")).build();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public OrderInstance orders() {
+        return new OrdersHandler();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public CustomerInstance customers() {
+        return new CustomersHandler();
+    }
 }

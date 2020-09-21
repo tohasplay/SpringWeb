@@ -1,4 +1,4 @@
-package com.demo.tools;
+package com.demo.utils;
 
 public class Node<T,V> {
     public T first;
