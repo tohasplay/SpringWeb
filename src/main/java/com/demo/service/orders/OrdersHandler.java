@@ -1,18 +1,19 @@
 package com.demo.service.orders;
 
 import com.demo.exception.NotFoundException;
-import com.demo.service.customers.CustomerInstance;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.demo.service.customers.CustomersHandler;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Component
 public class OrdersHandler implements OrderInstance{
 
-    @Autowired
-    private CustomerInstance customers;
+
     private int counter = 4;
-    private static final ArrayList<Order> orders = new ArrayList<>() {
+    private static final  @Getter
+    ArrayList<Order> orders = new ArrayList<>() {
         {
             add(new Order(1, "First", 23.23f, 1));
             add(new Order(2, "Second", 12.0f, 2));
@@ -38,8 +39,7 @@ public class OrdersHandler implements OrderInstance{
 
     @Override
     public Order addOrder(Order order) {
-        if (customers.getAllCustomers().stream()
-                .anyMatch(customer -> customer.getId() == order.getCustomer_id())) {
+        if (CustomersHandler.containsId(order.getCustomer_id())) {
             order.setId(counter++);
             order.setPrice(Math.round((float) (5 + Math.random() * 500) * 100.0f) / 100.0f);
             orders.add(order);

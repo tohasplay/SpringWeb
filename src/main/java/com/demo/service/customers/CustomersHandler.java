@@ -2,22 +2,28 @@ package com.demo.service.customers;
 
 import com.demo.exception.NotFoundException;
 import com.demo.service.orders.Order;
-import com.demo.service.orders.OrderInstance;
+import com.demo.service.orders.OrdersHandler;
 import com.demo.utils.Node;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-public class CustomersHandler implements CustomerInstance{
+@Component
+public class CustomersHandler implements CustomerInstance {
 
-    @Autowired
-    private OrderInstance orders;
+
     private static long counter = 1;
-    private final ArrayList<Customer> customers = new ArrayList<>(){{
+    private static final @Getter
+    ArrayList<Customer> customers = new ArrayList<>() {{
         add(new Customer(counter++, "Patrik", "ptrk@email.com", "0500450"));
-        add(new Customer(counter++, "Adam","adm@email.com", "0500450"));
-        add(new Customer(counter++, "Rubin","rbn@email.com", "0500450"));
+        add(new Customer(counter++, "Adam", "adm@email.com", "0500450"));
+        add(new Customer(counter++, "Rubin", "rbn@email.com", "0500450"));
     }};
+
+    public static boolean containsId(long id) {
+        return customers.stream().anyMatch(customer -> customer.getId() == id);
+    }
 
     @Override
     public ArrayList<Customer> getAllCustomers() {
@@ -36,7 +42,7 @@ public class CustomersHandler implements CustomerInstance{
 
     @Override
     public Customer addCustomer(Customer customer) {
-        if (customers.contains(customer)){
+        if (customers.contains(customer)) {
             return customer;
         }
         customer.setId(counter++);
@@ -51,10 +57,10 @@ public class CustomersHandler implements CustomerInstance{
 
     @Override
     public Node<Float, Integer> getChek(long id) {
-        Node<Float, Integer> result = new Node<>(0f,0);
+        Node<Float, Integer> result = new Node<>(0f, 0);
         for (Order o :
-                orders.getAllOrders()) {
-            if (o.getCustomer_id() == id){
+                OrdersHandler.getOrders()) {
+            if (o.getCustomer_id() == id) {
                 result.first += o.getPrice();
                 result.second++;
             }
@@ -63,7 +69,11 @@ public class CustomersHandler implements CustomerInstance{
     }
 
     @Override
-    public void deleteCustomer() {
-
+    public void deleteCustomer(long id) {
+        Customer delete;
+        if (customers.stream().anyMatch(customer -> customer.getId() == id)) {
+            delete = customers.stream().filter(customer -> customer.getId() == id).findFirst().get();
+            customers.remove(delete);
+        }
     }
 }

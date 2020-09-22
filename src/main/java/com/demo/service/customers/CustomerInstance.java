@@ -12,5 +12,5 @@ public interface CustomerInstance {
     Customer addCustomer(Customer customer);
     Customer updateCustomer(long id, Customer customer);
     Node<Float, Integer> getChek(long id);
-    void deleteCustomer();
+    void deleteCustomer(long id);
 }

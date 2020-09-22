@@ -27,15 +27,5 @@ public class DemoApplication {
                 .apis(RequestHandlerSelectors.basePackage("com.demo")).build();
     }
 
-    @Bean
-    @Scope("singleton")
-    public OrderInstance orders() {
-        return new OrdersHandler();
-    }
 
-    @Bean
-    @Scope("singleton")
-    public CustomerInstance customers() {
-        return new CustomersHandler();
-    }
 }
