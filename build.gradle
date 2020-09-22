@@ -28,7 +28,8 @@ dependencies {
 
 }
 
-test {
+
+task unitTests(type: Test){
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"

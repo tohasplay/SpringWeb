@@ -1,8 +1,6 @@
 package com.demo.service.customers;
 
-import com.demo.service.orders.OrderInstance;
 import com.demo.utils.Node;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
