@@ -8,4 +8,4 @@ services:
         - JAR_FILE=build/libs/*.jar
     restart: always
     ports:
-      - 8080:8080
+      - 80:8080
