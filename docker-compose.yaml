@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  spring:
+    build:
+      context: .
+      args:
+        - JAR_FILE=build/libs/*.jar
+    restart: always
+    ports:
+      - 500:500
