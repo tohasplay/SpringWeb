@@ -4,24 +4,29 @@ Vue.component('register-form', {
     props: ['customers'],
     data: function () {
         return {
-            name: ''
+            name: '',
+            mail: '',
+            phone: '',
+            password: ''
         }
     },
     template: '<div>' +
         '<input type="text" placeholder="Your name" v-model="name"/><br>' +
         '<input type="text" placeholder="e-mail" v-model="mail"/><br>' +
         '<input type="text" placeholder="phone" v-model="phone"/><br>' +
+        '<input type="password" placeholder="password" v-model="password"/><br>' +
         '<input type="button" value="Register" @click="save"/>'
         + '</div>',
     methods: {
         save: function () {
-            if (this.name === '' || this.mail === '' || this.phone === '') {
+            if (this.name === '' || this.mail === '' || this.phone === '' || this.password === '') {
                 return;
             }
             var customer = {
                 name: this.name,
                 mail: this.mail,
-                phone: this.phone
+                phone: this.phone,
+                password: this.password
             };
             registerApi.save({}, customer).then(result =>
                 result.json().then(data => {
@@ -29,6 +34,7 @@ Vue.component('register-form', {
                     this.name = '';
                     this.mail = '';
                     this.phone = '';
+                    this.password = '';
                 }))
         }
     }

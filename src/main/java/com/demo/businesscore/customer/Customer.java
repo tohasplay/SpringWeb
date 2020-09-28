@@ -1,6 +1,9 @@
-package com.demo.service.customers;
+package com.demo.businesscore.customer;
 
+import com.demo.businesscore.order.Order;
 import lombok.Data;
+
+import java.util.ArrayList;
 
 public @Data
 class Customer {
@@ -8,16 +11,19 @@ class Customer {
     private String name;
     private String mail;
     private String phone;
+    private String password;
+    private ArrayList<Order> orders = new ArrayList<>();
 
     public Customer() {
         super();
     }
 
-    public Customer(long id, String name, String mail, String phone) {
+    public Customer(long id, String name, String mail, String phone, String password) {
         this.id = id;
         this.name = name;
         this.mail = mail;
         this.phone = phone;
+        this.password = password;
     }
 
     @Override

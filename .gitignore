@@ -34,3 +34,4 @@ out/
 
 ### tests ###
 !**/src/test/
+/src/test/

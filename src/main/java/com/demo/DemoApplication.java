@@ -1,13 +1,8 @@
 package com.demo;
 
-import com.demo.service.customers.CustomerInstance;
-import com.demo.service.customers.CustomersHandler;
-import com.demo.service.orders.OrderInstance;
-import com.demo.service.orders.OrdersHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;

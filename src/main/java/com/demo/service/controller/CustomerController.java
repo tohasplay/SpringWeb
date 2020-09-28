@@ -1,5 +1,7 @@
-package com.demo.service.customers;
+package com.demo.service.controller;
 
+import com.demo.businesscore.customer.Customer;
+import com.demo.service.presentor.CustomerUndefinedPresentor;
 import com.demo.utils.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,22 +10,22 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/customer")
-public class CustomersController {
+public class CustomerController {
 
-    private final CustomerInstance customers;
+    private final CustomerUndefinedPresentor<Customer> customers;
 
-    private CustomersController(@Autowired CustomerInstance customers) {
+    private CustomerController(@Autowired CustomerUndefinedPresentor<Customer> customers) {
         this.customers = customers;
     }
 
     @GetMapping
     public ArrayList<Customer> defaultMap() {
-        return customers.getAllCustomers();
+        return customers.getAll();
     }
 
     @GetMapping("{id}")
     public Customer getById(@PathVariable long id) {
-        return customers.getCustomerById(id);
+        return customers.get(id);
     }
 
     @GetMapping("/count/{id}")
@@ -34,6 +36,6 @@ public class CustomersController {
 
     @PostMapping
     public Customer register(@RequestBody Customer customer) {
-        return customers.addCustomer(customer);
+        return customers.add(customer);
     }
 }
