@@ -53,7 +53,7 @@ public class OrderDataBase implements OrderDataBaseAccess {
 
     @Override
     public void updateObject(Order data, long id) {
-         customerDataBaseAccess.findById(id).getOrders().stream().filter(
+        customerDataBaseAccess.findById(id).getOrders().stream().filter(
                 order -> order.getId() == data.getId()
         ).findFirst().ifPresent(
                 order -> {
@@ -67,6 +67,13 @@ public class OrderDataBase implements OrderDataBaseAccess {
     @Override
     public boolean contains(Order data, long id) {
         return customerDataBaseAccess.findById(id).getOrders().stream().anyMatch(order -> order.getId() == id);
+    }
+
+    @Override
+    public boolean verifyUser(long id, String password) {
+        return customerDataBaseAccess.getAllData().stream().anyMatch(
+                customer -> customer.getId() == id && customer.getPassword().equals(password)
+        );
     }
 
 

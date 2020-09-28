@@ -26,4 +26,6 @@ public interface OrderDataBaseAccess extends DataBaseAccess<Order>{
     }
 
     boolean contains(Order data, long id);
+
+    boolean verifyUser(long id, String password);
 }

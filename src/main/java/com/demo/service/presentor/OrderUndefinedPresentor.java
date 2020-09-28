@@ -8,7 +8,7 @@ public interface OrderUndefinedPresentor extends Presentor<Order> {
         return null;
     };
 
-    Order add(Order data, long id);
+    Order add(Order data, long id, String password);
 
 
     @Override
@@ -23,6 +23,7 @@ public interface OrderUndefinedPresentor extends Presentor<Order> {
     }
 
     Order update(Order data, long id);
+
 
 
 }

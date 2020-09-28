@@ -13,13 +13,14 @@ public class OrderPresentor implements OrderUndefinedPresentor {
 
     private OrderDataBaseAccess orderDataBaseAccess;
 
-    private OrderPresentor(@Autowired OrderDataBaseAccess orderDataBaseAccess){
+    private OrderPresentor(@Autowired OrderDataBaseAccess orderDataBaseAccess) {
         this.orderDataBaseAccess = orderDataBaseAccess;
     }
 
     @Override
-    public Order add(Order data, long id) {
-        orderDataBaseAccess.putObject(data, id);
+    public Order add(Order data, long id, String password) {
+        if (orderDataBaseAccess.verifyUser(id, password))
+            orderDataBaseAccess.putObject(data, id);
         return data;
     }
 
@@ -40,6 +41,7 @@ public class OrderPresentor implements OrderUndefinedPresentor {
         orderDataBaseAccess.updateObject(data, id);
         return data;
     }
+
 
     @Override
     public ArrayList<Order> getAll() {

@@ -4,30 +4,36 @@ Vue.component('order-form', {
     data: function () {
         return {
             text: '',
-            userId: ''
+            userId: '',
+            password: ''
         }
     },
     template:
         '<div>' +
         '<input type="text" placeholder="Order here" v-model="text"/><br>' +
         '<input type="text" placeholder="Your id" v-model="userId"/><br>' +
+        '<input type="password" placeholder="Password" v-model="password"/><br>' +
         '<input type="button" value="Place Order" @click="save"/>'
         + '</div>',
     methods: {
         save: function () {
-            if (this.text === '' || this.userId === '') {
+            if (this.text === '' || this.userId === '' || this.password === '') {
                 return;
             }
-            var order = {
-                text: this.text
+            var object = {
+                text: this.text,
+                password: this.password
             };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/order/' + this.userId, true);
             xhr.setRequestHeader('Content-Type', 'application/json')
-            xhr.send('{"text": "' + order.text + '"}');
+            xhr.send('{"text": "' + object.text + '",\n'+
+                '"password": "' + object.password +
+                '"}');
 
             this.text = '';
             this.userId = '';
+            this.password = '';
 
         }
     }

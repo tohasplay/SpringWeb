@@ -11,25 +11,26 @@ import java.util.ArrayList;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final OrderUndefinedPresentor orderExecutionUnit;
+    private final OrderUndefinedPresentor orderPresentor;
 
-    private OrderController(@Autowired OrderUndefinedPresentor orderExecutionUnit){
-        this.orderExecutionUnit = orderExecutionUnit;
+    private OrderController(@Autowired OrderUndefinedPresentor orderPresentor){
+        this.orderPresentor = orderPresentor;
     }
 
     @GetMapping
     public ArrayList<Order> defaultMapping(){
-        return orderExecutionUnit.getAll();
+        return orderPresentor.getAll();
     }
 
     @PostMapping("{userId}")
-    public Order createOrder(@RequestBody Order data, @PathVariable long userId){
-        return orderExecutionUnit.add(data, userId);
+    public Order createOrder(@RequestBody postOrderRequestData data, @PathVariable long userId){
+
+        return orderPresentor.add(new Order(0, data.getText(), 0f), userId, data.getPassword());
     }
 
     @GetMapping("{id}")
     public Order getOrder(@PathVariable long id){
-        return orderExecutionUnit.get(id);
+        return orderPresentor.get(id);
     }
 
 }
