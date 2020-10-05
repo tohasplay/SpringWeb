@@ -1,29 +1,14 @@
 package com.demo.service.presentor;
 
-import com.demo.businesscore.order.Order;
+import com.demo.businesscore.Order;
 
-public interface OrderUndefinedPresentor extends Presentor<Order> {
-    @Override
-    default Order add(Order data){
-        return null;
-    };
+import java.util.ArrayList;
 
+public interface OrderUndefinedPresentor {
+
+    ArrayList<Order> getAll();
     Order add(Order data, long id, String password);
-
-
-    @Override
-    default void delete(long id) {
-    }
-
-    void delete(Order data, long id);
-
-    @Override
-    default Order update(long id, Order data) {
-        return null;
-    }
-
-    Order update(Order data, long id);
-
-
-
+    Order get(long id);
+    Order update(Order data);
+    void delete(long id);
 }

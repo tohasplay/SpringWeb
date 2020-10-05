@@ -1,6 +1,7 @@
 package com.demo.service.controller;
 
-import com.demo.businesscore.customer.Customer;
+import com.demo.businesscore.Customer;
+import com.demo.service.kafka.KafkaCustomerProducer;
 import com.demo.service.presentor.CustomerUndefinedPresentor;
 import com.demo.utils.Node;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,13 @@ import java.util.ArrayList;
 public class CustomerController {
 
     private final CustomerUndefinedPresentor<Customer> customers;
+    private final KafkaCustomerProducer producer;
 
-    private CustomerController(@Autowired CustomerUndefinedPresentor<Customer> customers) {
+    @Autowired
+    private CustomerController( CustomerUndefinedPresentor<Customer> customers,
+                                KafkaCustomerProducer producer) {
         this.customers = customers;
+        this.producer = producer;
     }
 
     @GetMapping
@@ -36,6 +41,9 @@ public class CustomerController {
 
     @PostMapping
     public Customer register(@RequestBody Customer customer) {
+        producer.sendMessage("registration -> "
+                + customer.toString()
+        );
         return customers.add(customer);
     }
 }

@@ -1,31 +1,23 @@
 package com.demo.service.data;
 
-import com.demo.businesscore.order.Order;
+import com.demo.businesscore.Order;
 
-public interface OrderDataBaseAccess extends DataBaseAccess<Order>{
+import java.util.ArrayList;
 
-    @Override
-    default void putObject(Order data) {
-    }
+public interface OrderDataBaseAccess{
 
+    ArrayList<Order> getAllOrders();
     void putObject(Order data, long id);
-
-    @Override
-    default void deleteObject(Order data) {
-    }
-
-    void deleteObject(Order data, long id);
-    @Override
-    default void updateObject(Order data) {
-    }
-
-    void updateObject(Order data, long id);
-    @Override
-    default boolean contains(Order data) {
-        return false;
-    }
-
-    boolean contains(Order data, long id);
-
+    void deleteObject(long id);
+    void updateObject(Order data);
+    Order getById(long id);
     boolean verifyUser(long id, String password);
+    Order getLastOrder();
+
+    /**
+     * uses for calculation total for particular customer
+     * @param id customer id
+     * @return list of all orders made by customer
+     */
+    ArrayList<Order> getOrdersByCustomer(long id);
 }
