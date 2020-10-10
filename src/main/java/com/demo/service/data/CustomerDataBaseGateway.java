@@ -1,93 +1,97 @@
 package com.demo.service.data;
 
-import com.demo.businesscore.Customer;
-import com.demo.businesscore.Order;
+import com.demo.dto.Customer;
+import com.demo.dto.Order;
 import com.demo.exception.NotFoundException;
+import com.demo.service.data.DBConnection.AutocloseableResultSet;
+import com.demo.service.data.DBConnection.DataBaseConnector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//DONE: jdbc right way + try with resources
+//TODO: rewrite spring data (repository)
 @Component
-public class CustomerDataBaseGateway implements CustomerDataBaseAccess{
+public class CustomerDataBaseGateway implements CustomerDataBaseAccess {
 
+    private final DataBaseConnector dataBaseConnector;
+
+    @Autowired
+    public CustomerDataBaseGateway(DataBaseConnector dataBaseConnector) {
+        this.dataBaseConnector = dataBaseConnector;
+    }
 
     @Override
-    public ArrayList<Customer> getAllData() {
-        ResultSet set = DataBaseConnector.executeQuery("SELECT * FROM customer");
-        assert set != null;
+    public ArrayList<Customer> getAll() {
         ArrayList<Customer> result = new ArrayList<>();
-        while (true) {
-            try {
-                if (set.next()) {
+        try (AutocloseableResultSet set = dataBaseConnector.executeQuery("SELECT * FROM customer")) {
+            assert set != null;
+            while (true) {
+                if (set.getResultSet().next()) {
                     result.add(new Customer(
-                            set.getLong("id"),
-                            set.getString("name"),
-                            set.getString("mail"),
-                            set.getString("phone"),
-                            set.getString("password")
+                            set.getResultSet().getLong("id"),
+                            set.getResultSet().getString("name"),
+                            set.getResultSet().getString("mail"),
+                            set.getResultSet().getString("phone"),
+                            set.getResultSet().getString("password")
                     ));
                 } else break;
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        DataBaseConnector.closeConnections();
         return result;
     }
 
     @Override
     public Customer findById(long id) {
-        ResultSet set = DataBaseConnector.executeQuery("SELECT * FROM customer WHERE id='" + id + "'");
-        assert set != null;
-        try {
-            if (set.next())
+        try (AutocloseableResultSet set = dataBaseConnector.executeQuery("SELECT * FROM customer WHERE id='" + id + "'")) {
+            assert set != null;
+            if (set.getResultSet().next())
                 return new Customer(
-                        set.getLong("id"),
-                        set.getString("name"),
-                        set.getString("mail"),
-                        set.getString("phone"),
-                        set.getString("password")
+                        set.getResultSet().getLong("id"),
+                        set.getResultSet().getString("name"),
+                        set.getResultSet().getString("mail"),
+                        set.getResultSet().getString("phone"),
+                        set.getResultSet().getString("password")
                 );
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            DataBaseConnector.closeConnections();
         }
         throw new NotFoundException();
     }
 
     @Override
-    public Customer putObject(Customer data) {
-        DataBaseConnector.executeUpdateQuery(
+    public Customer put(Customer data) {
+        dataBaseConnector.executeUpdate(
                 "INSERT INTO customer VALUES(0, '" +
                         data.getName() + "', '" +
                         data.getMail().toLowerCase() + "', '" +
                         data.getPhone() + "', '" +
                         data.getPassword() + "')"
         );
-        ResultSet set = DataBaseConnector.executeQuery("SELECT max(id) FROM customer");
-        try {
+
+        try (AutocloseableResultSet set = dataBaseConnector.executeQuery("SELECT max(id) FROM customer")) {
             assert set != null;
-            if (set.next())
-                data.setId(set.getLong(1));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            DataBaseConnector.closeConnections();
+            if (set.getResultSet().next())
+                data.setId(set.getResultSet().getLong(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return data;
     }
 
     @Override
-    public void deleteObject(Customer data) {
-        DataBaseConnector.executeUpdateQuery("DELETE FROM customer WHERE mail='" + data.getMail().toLowerCase() + "'");
+    public void delete(long id) {
+        dataBaseConnector.executeUpdate("DELETE FROM customer WHERE id=" + id);
     }
 
     @Override
-    public void updateObject(long id, Customer data) {
-        DataBaseConnector.executeUpdateQuery("UPDATE customer SET " +
+    public void update(long id, Customer data) {
+        dataBaseConnector.executeUpdate("UPDATE customer SET " +
                 "name='" + data.getName() + "'," +
                 "mail='" + data.getMail() + "'," +
                 "phone='" + data.getPhone() + "'," +
@@ -98,11 +102,13 @@ public class CustomerDataBaseGateway implements CustomerDataBaseAccess{
 
     @Override
     public boolean contains(Customer data) {
-        ResultSet set =
-                DataBaseConnector.executeQuery("SELECT * FROM customer WHERE mail='" + data.getMail().toLowerCase() + "'");
-        try {
-            if (set.next()) {
-                DataBaseConnector.closeConnections();
+        try (AutocloseableResultSet set =
+                     dataBaseConnector
+                             .executeQuery(
+                                     "SELECT * FROM customer WHERE mail='" + data.getMail().toLowerCase() + "'"
+                             )
+        ) {
+            if (set.getResultSet().next()) {
                 return true;
             }
         } catch (SQLException e) {
@@ -113,6 +119,22 @@ public class CustomerDataBaseGateway implements CustomerDataBaseAccess{
 
     @Override
     public ArrayList<Order> getOrders(long id) {
-        return null;
+        ArrayList<Order> orders = new ArrayList<>();
+        try(ResultSet set = dataBaseConnector.executeQuery(
+                "SELECT * FROM `order` WHERE customer_id=" + id
+        ).getResultSet()) {
+            while (set.next()){
+                orders.add(
+                        new Order(
+                                set.getLong("id"),
+                                set.getString("text"),
+                                set.getFloat("price")
+                        )
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

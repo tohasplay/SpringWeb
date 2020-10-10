@@ -2,6 +2,12 @@ package com.demo.utils;
 
 import java.util.Objects;
 
+/**
+ * using for counting chek results containing two parameters
+ * @see com.demo.interactor.CustomerManager#calculateTotal(long)
+ * @param <T> first parameter -> Float
+ * @param <V> second parameter -> Integer
+ */
 public class Node<T,V> {
     public T first;
     public V second;

@@ -1,14 +1,14 @@
 package com.demo.service.data;
 
-import com.demo.businesscore.Customer;
+import com.demo.dto.Customer;
 
 import java.util.List;
-
+//DONE: rename
 public interface DataBaseAccess<T> {
-    List<T> getAllData();
+    List<T> getAll();
     T findById(long id);
-    Customer putObject(T data);
-    void deleteObject(T data);
-    void updateObject(long id, T data);
+    Customer put(T data);
+    void delete(long id);
+    void update(long id, T data);
     boolean contains(T data);
 }
