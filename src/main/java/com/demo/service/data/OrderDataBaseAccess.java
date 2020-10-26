@@ -7,10 +7,9 @@ import java.util.ArrayList;
 public interface OrderDataBaseAccess{
 
     ArrayList<Order> getAllOrders();
-    void put(Order data, long id);
+    Order put(Order data, long id);
     void delete(long id);
     void update(Order data);
     Order getById(long id);
     boolean verifyUser(long id, String password);
-    Order getLastOrder();
 }

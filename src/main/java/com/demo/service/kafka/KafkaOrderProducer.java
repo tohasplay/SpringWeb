@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class KafkaOrderProducer {
         private static final Logger logger = LoggerFactory.getLogger(KafkaOrderProducer.class);
         private static final String TOPIC = "order";
-        private static int key = 0;
+        private static final int key = 0;
 
         @Autowired
         private KafkaTemplate<String, String> kafkaTemplate;

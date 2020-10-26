@@ -1,4 +1,4 @@
-var orderApi = Vue.resource('/order{/userId}');
+let net = new Net()
 
 Vue.component('order-form', {
     data: function () {
@@ -20,16 +20,10 @@ Vue.component('order-form', {
             if (this.text === '' || this.userId === '' || this.password === '') {
                 return;
             }
-            var object = {
-                text: this.text,
-                password: this.password
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/order/' + this.userId, true);
-            xhr.setRequestHeader('Content-Type', 'application/json')
-            xhr.send('{"text": "' + object.text + '",\n'+
-                '"password": "' + object.password +
-                '"}');
+
+            let body = JSON.stringify({text: this.text, password: this.password})
+
+            net.postRequest('/order/' + this.userId, body)
 
             this.text = '';
             this.userId = '';

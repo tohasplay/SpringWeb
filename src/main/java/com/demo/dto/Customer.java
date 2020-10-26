@@ -1,26 +1,28 @@
 package com.demo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "customer")
 public class Customer {
+    @Id
     private long id;
     private String name;
     private String mail;
     private String phone;
     private String password;
 
-    public Customer(long id, String name, String mail, String phone, String password) {
-        this.id = id;
-        this.name = name;
-        this.mail = mail;
-        this.phone = phone;
-        this.password = password;
-    }
-
-   //DONE: redo equals and hash contr
+    //DONE: redo equals and hash contr
 
 //    @Override
 //    public boolean equals(Object obj) {

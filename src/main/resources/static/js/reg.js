@@ -1,4 +1,4 @@
-var registerApi = Vue.resource('/customer{/id}');
+let net = new Net();
 
 Vue.component('register-form', {
     props: ['customers'],
@@ -22,21 +22,28 @@ Vue.component('register-form', {
             if (this.name === '' || this.mail === '' || this.phone === '' || this.password === '') {
                 return;
             }
-            var customer = {
+            let customer = {
                 name: this.name,
                 mail: this.mail,
                 phone: this.phone,
                 password: this.password
-            };
-            registerApi.save({}, customer).then(result =>
-                result.json().then(data => {
-                    this.customers.push(data);
-                    this.name = '';
-                    this.mail = '';
-                    this.phone = '';
-                    this.password = '';
-                }))
+            }
+
+            let body = JSON.stringify({
+                name: customer.name,
+                mail: customer.mail,
+                phone: customer.phone,
+                password: customer.password
+            })
+
+            this.name=''
+            this.mail=''
+            this.phone = ''
+            this.password=''
+
+            net.postRequest('/customer', body, this.customers)
         }
+
     }
 
 })

@@ -1,10 +1,5 @@
 package com.demo.interactor;
 
-import com.demo.dto.Order;
-import com.demo.dto.builder.AutoPricedBuilder;
-import com.demo.dto.builder.OrderBuilder;
-import com.demo.dto.builder.OrderDirector;
-import com.demo.exception.NotFoundException;
 import com.demo.service.data.OrderDataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,17 +21,17 @@ public class CustomerManager {
         this.orderDataBaseAccess = orderDataBaseAccess;
     }
 
-    public Order makeOrder(long id, String text, String password) {
-        if (!orderDataBaseAccess.verifyUser(id, password))
-            throw new NotFoundException();
-        OrderBuilder orderBuilder = new AutoPricedBuilder(text);
-        OrderDirector orderDirector = new OrderDirector();
-        orderDirector.setOrderBuilder(orderBuilder);
-        orderDirector.constructOrder();
-        orderDataBaseAccess.put(orderDirector.getOrder(), id);
-
-        return orderDataBaseAccess.getLastOrder();
-    }
+//    public Order makeOrder(long id, String text, String password) {
+//        if (!orderDataBaseAccess.verifyUser(id, password))
+//            throw new NotFoundException();
+//        OrderBuilder orderBuilder = new AutoPricedOrder(text);
+//        OrderDirector orderDirector = new OrderDirector();
+//        orderDirector.setOrderBuilder(orderBuilder);
+//        orderDirector.constructOrder();
+//        orderDataBaseAccess.put(orderDirector.getOrder(), id);
+//
+//        return orderDataBaseAccess.getLastOrder();
+//    }
 
 //    public Node<Float, Integer> calculateTotal(long id) {
 //        Node<Float, Integer> result = new Node<>(0f, 0);

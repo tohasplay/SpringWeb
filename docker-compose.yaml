@@ -56,6 +56,8 @@ services:
       - app-tier
     depends_on:
       - kafka
+    volumes:
+      - ./spring_data:/resources
 
   db:
     image: mysql

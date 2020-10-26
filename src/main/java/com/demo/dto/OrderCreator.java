@@ -1,9 +1,11 @@
 package com.demo.dto;
 
+import com.demo.dto.builder.AutoPricedOrder;
+
 /**
  * use builder instead
  * {@link com.demo.dto.builder.OrderBuilder}
- * {@link com.demo.dto.builder.AutoPricedBuilder}
+ * {@link AutoPricedOrder}
  * {@link com.demo.dto.builder.OrderDirector}
  */
 @Deprecated

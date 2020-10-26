@@ -1,4 +1,4 @@
-var countApi = Vue.resource('/customer/count/{id}')
+const countApi = Vue.resource('/customer/count/{id}');
 
 Vue.component('total-form', {
     props: ['node'],
@@ -29,7 +29,7 @@ Vue.component('total-form', {
     }
 })
 
-var app = new Vue({
+const app = new Vue({
     el: '#app',
     template: '<total-form :node="node"/>',
     data: {

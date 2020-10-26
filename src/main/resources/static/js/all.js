@@ -1,4 +1,4 @@
-var orderApi = Vue.resource('/order{/id}');
+const orderApi = Vue.resource('/order{/id}');
 
 Vue.component('order-row', {
     props: ['order'],
@@ -19,7 +19,7 @@ Vue.component('orders-list', {
     }
 });
 
-var app = new Vue({
+const app = new Vue({
     el: '#app',
     template: '<orders-list :orders="orders"/>',
     data: {

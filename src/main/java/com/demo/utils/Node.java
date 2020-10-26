@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * using for counting chek results containing two parameters
- * @see com.demo.interactor.CustomerManager#calculateTotal(long)
+ * @see com.demo.service.presentor.CustomerPresentorImpl#getChek(long)
  * @param <T> first parameter -> Float
  * @param <V> second parameter -> Integer
  */

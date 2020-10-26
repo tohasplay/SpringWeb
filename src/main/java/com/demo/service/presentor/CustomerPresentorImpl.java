@@ -54,6 +54,7 @@ public class CustomerPresentorImpl implements CustomerPresentor {
             result.first += o.getPrice();
             result.second++;
         }
+        result.first = ((float)Math.round(result.first * 1000f) / 1000f );
         return result;
     }
 }
