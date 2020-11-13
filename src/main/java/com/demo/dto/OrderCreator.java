@@ -9,7 +9,6 @@ import com.demo.dto.builder.AutoPricedOrder;
  * {@link com.demo.dto.builder.OrderDirector}
  */
 @Deprecated
-//DONE: pattern builder, gang of for (read)
 public class OrderCreator {
     public Order createOrder(String text) {
         return new Order(0, text, priceGenerator());

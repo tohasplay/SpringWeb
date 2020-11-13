@@ -12,16 +12,19 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-//DONE: jdbc right way + try with resources
-//DONE: rewrite spring data (repository)
+/**DONE: transaction isolation layer
+ *  For MySQL four standard il:
+ *    -  READ UNCOMMITTED
+ *    -  READ COMMITTED
+ *    -  REPEATABLE READ (default)
+ *    -  SERIALIZABLE
+ **/
 @Service
-@Transactional
 public class CustomerDataService implements CustomerDataBaseAccess {
 
     private final CustomerRepository customerRepository;
     private final OrderRepository orderRepository;
 
-    @Autowired
     public CustomerDataService(CustomerRepository customerRepository,
                                OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
@@ -43,6 +46,7 @@ public class CustomerDataService implements CustomerDataBaseAccess {
         return customer.get();
     }
 
+    @Transactional
     @Override
     public Customer put(Customer data) {
         customerRepository.save(data);

@@ -22,7 +22,6 @@ public class Customer {
     private String phone;
     private String password;
 
-    //DONE: redo equals and hash contr
 
 //    @Override
 //    public boolean equals(Object obj) {
@@ -31,6 +30,7 @@ public class Customer {
 //        return this.getMail().toLowerCase().equals(((Customer) obj).getMail().toLowerCase());
 //    }
 
+    //a.equals(b) ^ !b.equals(a) extend
 
     @Override
     public boolean equals(Object o) {

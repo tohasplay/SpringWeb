@@ -43,17 +43,16 @@ public class CustomerRestController {
     }
 
     //DONE: consistency
-
     @PostMapping
     public Customer register(@RequestBody Customer customer) {
-        try {
-            producer.sendMessage("registration -> "
-                    + customer.toString()
-            );
-            return customers.add(customer);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new AlreadyRegisteredException("user can't be registered");
-        }
+//            producer.sendMessage("registration -> "
+//                    + customer.toString()
+//            );
+//      1 produce msg about new order ->
+//      2 consume that msg try to create order and push it to db
+//      3a on success produce msg about successful operation ->
+//      3b on fall redirect msg to exception channel (invalid msg topic) ->
+//      4 consume msg from (3a || 3b) return result(exc)
+        return customers.add(customer);
     }
 }

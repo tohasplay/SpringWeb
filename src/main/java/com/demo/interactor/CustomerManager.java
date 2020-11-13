@@ -4,7 +4,6 @@ import com.demo.service.data.OrderDataBaseAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-//DONE: reduce this
 
 /**
  * @deprecated
